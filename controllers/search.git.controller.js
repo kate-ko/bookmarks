@@ -7,7 +7,7 @@ exports.index = function (req, res) {
         .then(result => {
             res.json({
                 status: 'success',
-                data: result && result.body && result.body.map ? result.body.map(el => ({ name: el.name, description: el.description, html_url: el.html_url })) : []
+                data: result && result.body && result.body.map ? result.body : []
             })
         })
         .catch(err => {

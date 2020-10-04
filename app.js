@@ -3,9 +3,9 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const logger = require('morgan');
 const apiRoutes = require('./routes')
-const port = process.env.PORT || 8080;
 
 const { MONGO_URL } = process.env;
 const mongoose = require('mongoose');
@@ -16,15 +16,16 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(port, function () {
-  console.log("Running API on Port " + port);
-})
+// app.listen(port, function () {
+//   console.log("Running API on Port " + port);
+// })
 
 //Use API routes in the App
 app.use('/', apiRoutes)

@@ -2,13 +2,17 @@ const mongoose = require('mongoose');
 
 //schema
 const bookmarkSchema = mongoose.Schema({
+    id: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true
     },
-    organization: {
+    org: {
         type: String,
-        required: true
+        required: false
     },
     description: {
         type: String,

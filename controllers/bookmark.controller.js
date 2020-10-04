@@ -19,10 +19,14 @@ exports.index = function (req, res) {
 
 //For creating new bookmark
 exports.add = function (req, res) {
-    var bookmark = new Bookmark();
-    bookmark.name = req.body.name ? req.body.name : bookmark.name;
-    bookmark.organization = req.body.organization;
-    bookmark.downloads = req.body.downloads;
+    const bookmark = new Bookmark();
+    const { name, owner, description, html_url, id } = req.body
+
+    bookmark.name = name;
+    bookmark.org = owner ? owner.login : '';
+    bookmark.description = description;
+    bookmark.html_url = html_url;
+    bookmark.id = id;
 
     //Save and check error
     bookmark.save(function (err) {
@@ -37,7 +41,7 @@ exports.add = function (req, res) {
 
 // View Bookmark
 exports.view = function (req, res) {
-    Bookmark.findById(req.params.bookmark_id, function (err, bookmark) {
+    Bookmark.findById(req.params.id, function (err, bookmark) {
         if (err)
             res.send(err);
         res.json({
@@ -49,12 +53,16 @@ exports.view = function (req, res) {
 
 // Update Bookmark
 exports.update = function (req, res) {
-    Bookmark.findById(req.params.bookmark_id, function (err, bookmark) {
-        if (err)
-            res.send(err);
-        bookmark.name = req.body.name ? req.body.name : bookmark.name;
-        bookmark.organization = req.body.organization;
-        bookmark.downloads = req.body.downloads;
+    Bookmark.findById(req.params.id, function (err, bookmark) {
+        if (err) res.send(err);
+
+        const { name, org, description, html_url, id } = req.body
+
+        bookmark.name = name;
+        bookmark.org = org;
+        bookmark.description = description;
+        bookmark.html_url = html_url;
+        bookmark._id = id;
 
         //save and check errors
         bookmark.save(function (err) {
@@ -71,7 +79,7 @@ exports.update = function (req, res) {
 // Delete Bookmark
 exports.delete = function (req, res) {
     Bookmark.deleteOne({
-        _id: req.params._id
+        _id: req.params.id
     }, function (err, contact) {
         if (err)
             res.send(err)
