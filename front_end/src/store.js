@@ -1,35 +1,58 @@
-import { observable, action, toJS } from 'mobx';
+import { observable, action } from 'mobx';
 import { fetch_repos, find_bookmarks } from './API'
-import { add_bookmark } from './API'
+import { add_bookmark, delete_bookmark } from './API'
 
-class baseClass {
-    @observable org = {};
-    @observable found_repos = []
-    @observable bookmarks = []
+export default class baseClass {
+    constructor() {
+        this.searchRepos = this.searchRepos.bind(this);
+    }
+
+    @observable org;
+    @observable t;
+    @observable found_repos = [];
+    @observable bookmarks = [];
     @observable loading_repos = false;
+    @observable loading_bookmarks = false;
 
+    @action searchRepos() {
+        console.log('search repos')
+        this.loading_repos = true;
+        this.t = 'fff'
+        this.found_repos = [{name: 'a'}]
+        //this.loading_repos = false;
+
+        /* fetch_repos(this.org).then(data => {
+            console.log('in then', data)
+            that.found_repos = data ? data : [];
+            that.loading_repos = false;
+            //return Promise.resolve()
+        }).catch(err => {
+            that.loading_repos = false;
+            //return Promise.reject()
+        }) */
+    }
+
+    @action
     handleChange = (event) => {
+        this.loading_repos = 999999;
         this.org = event.target.value;
     }
 
-    searchRepos = () => {
-        this.loading_repos = true;
-
-        fetch_repos(this.org).then(data => {
-            this.found_repos = data || [];
-            this.loading_repos = false;
-        })
-            .catch(err => {
-                this.loading_repos = false;
-            })
-    }
-
+    @action
     searchBookmarks = () => {
+        this.loading_bookmarks = true;
+        const that = this
         return find_bookmarks().then(data => {
-            this.bookmarks = data || []
+            that.loading_bookmarks = false
+            this.bookmarks = data;
+            return Promise.resolve()
+        }).catch(err => {
+            this.loading_bookmarks = false;
+            return Promise.reject()
         })
     }
 
+    @action
     addBookmark = (data) => {
         add_bookmark(data).then(() => {
             this.found_repos = this.found_repos.map(el => {
@@ -39,6 +62,17 @@ class baseClass {
         })
     }
 
-}
+    @action
+    remove_bookmark = (id) => {
+        this.loading_bookmarks = true
 
-export const BookmarkStore = new baseClass();
+        return delete_bookmark(id).then(() => {
+            this.loading_bookmarks = false
+            this.bookmarks = this.bookmarks.filter(el => el._id !== id)
+            return Promise.resolve()
+        }).catch(err => {
+            this.loading_bookmarks = false
+        })
+    }
+
+}

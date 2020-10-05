@@ -3,13 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark } from '@fortawesome/free-regular-svg-icons'
 import { add_bookmark } from './API'
+import { toJS } from 'mobx';
+import { observer } from 'mobx-react';
+import { inject } from 'mobx-react';
 
-export default class extends Component {
+@inject("store")
+
+@observer
+class SearchResults extends Component {
     render() {
-        return <div className="main">
-            {this.props.loading_repos ? <div className="spinner"></div> :
+        const store = this.props.store;
+        console.log('store.loading_repos ', store.loading_repos )
 
-                this.props.found_repos.length ? this.props.found_repos.map(el =>
+        return <div className="main">
+            {store.loading_repos ? <div className="spinner"></div> :
+
+                store.found_repos.length ? store.found_repos.map(el =>
                     <div key={el._id}
                         className="block"
                     >
@@ -23,3 +32,5 @@ export default class extends Component {
         </div>
     }
 }
+
+export default SearchResults;
