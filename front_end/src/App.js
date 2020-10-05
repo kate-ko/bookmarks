@@ -15,6 +15,7 @@ import { add_bookmark } from './API'
 import 'bootstrap/dist/css/bootstrap.css';
 
 import { fetch_repos, find_bookmarks } from './API'
+import BookmarkStore from './store.js'
 
 export default class extends Component {
   state = {
@@ -58,7 +59,7 @@ export default class extends Component {
     return (
       <Router>
         <div>
-          <Navbar org={this.state.org} handleChange={this.handleChange} searchRepos={this.searchRepos} />
+          <Navbar store={BookmarkStore} org={this.state.org} handleChange={this.handleChange} searchRepos={this.searchRepos} />
 
           <Switch>
             <Route path="/bookmarks">
