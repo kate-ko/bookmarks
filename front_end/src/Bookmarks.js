@@ -12,11 +12,7 @@ import { inject } from 'mobx-react';
 @observer
 class Bookmarks extends Component {
     componentDidMount() {
-        this.props.store.searchBookmarks()//.then(() => this.forceUpdate())
-    }
-
-    delete_bookmark = (id) => {
-        this.props.store.remove_bookmark(id).then(() => this.forceUpdate())
+        this.props.store.searchBookmarks()
     }
 
     render() {
@@ -27,7 +23,7 @@ class Bookmarks extends Component {
                 store.bookmarks && store.bookmarks.length ? store.bookmarks.map(el =>
                     <div key={el._id} className="block">
                         <a target="_blank" rel="noopener noreferrer" href={el.html_url}>{el.name}</a>
-                        <FontAwesomeIcon onClick={() => this.remove_bookmark(el._id)} icon={faTrash} />
+                        <FontAwesomeIcon onClick={() => store.remove_bookmark(el._id)} icon={faTrash} />
                         <div className="desc">{el.description}</div>
                         <div className="org">{el.org}</div>
                     </div>) : 'No bookmarks added'

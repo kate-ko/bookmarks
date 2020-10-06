@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { observer } from 'mobx-react';
 
 @observer
-export default class extends Component {
+class App extends Component {
   render() {
     return (
       <Router>
@@ -40,4 +40,6 @@ export default class extends Component {
     );
   }
 }
+
+export default App
 

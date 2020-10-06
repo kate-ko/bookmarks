@@ -4,12 +4,12 @@ const Bookmark = require('../models/bookmark.model');
 exports.index = function (req, res) {
     Bookmark.get(function (err, bookmark) {
         if (err)
-            res.json({
+            return res.json({
                 status: "error",
                 message: err
             });
 
-        res.json({
+        return res.json({
             status: "success",
             message: "Got Bookmark Successfully!",
             data: bookmark
@@ -30,9 +30,8 @@ exports.add = function (req, res) {
 
     //Save and check error
     bookmark.save(function (err) {
-        if (err)
-            res.json(err);
-        res.json({
+        if (err) return res.json(err);
+        return res.json({
             message: "New Bookmark Added!",
             data: bookmark
         });
@@ -43,8 +42,8 @@ exports.add = function (req, res) {
 exports.view = function (req, res) {
     Bookmark.findById(req.params.id, function (err, bookmark) {
         if (err)
-            res.send(err);
-        res.json({
+            return res.send(err);
+        return res.json({
             message: 'Bookmark Details',
             data: bookmark
         });
@@ -67,8 +66,8 @@ exports.update = function (req, res) {
         //save and check errors
         bookmark.save(function (err) {
             if (err)
-                res.json(err)
-            res.json({
+                return res.json(err)
+            return res.json({
                 message: "Bookmark Updated Successfully",
                 data: bookmark
             });
@@ -82,7 +81,7 @@ exports.delete = function (req, res) {
         _id: req.params.id
     }, function (err, contact) {
         if (err)
-            res.send(err)
+            return res.send(err)
         res.json({
             status: "success",
             message: 'Bookmark Deleted'

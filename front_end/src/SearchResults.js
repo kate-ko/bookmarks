@@ -11,23 +11,33 @@ import { inject } from 'mobx-react';
 
 @observer
 class SearchResults extends Component {
+    componentDidMount() {
+        this.props.store.searchBookmarks()
+    }
+
     render() {
         const store = this.props.store;
-        console.log('store.loading_repos ', store.loading_repos )
 
         return <div className="main">
             {store.loading_repos ? <div className="spinner"></div> :
 
                 store.found_repos.length ? store.found_repos.map(el =>
-                    <div key={el._id}
+                    <div key={el.id}
                         className="block"
                     >
                         <a target="_blank" rel="noopener noreferrer" href={el.html_url}>{el.name}</a>
                         {
-                            <FontAwesomeIcon onClick={() => add_bookmark(el)} icon={faBookmark} />}
+                            el.added ? <FontAwesomeIcon
+                                className="icon" title="remove"
+                                icon={solidBookmark}
+                                onClick={() => store.removeBookmark(el._id)} /> :
+                                <FontAwesomeIcon className="icon" title="add" onClick={() => store.addBookmark(el)}
+                                    icon={faBookmark}
+                                />
+                        }
                         <div className="desc">{el.description}</div>
-                        <div>{el.id}</div>
-                    </div>) : 'No repos found'
+                        <div>{el._id}</div>
+                    </div>) : <div>No repos found</div>
             }
         </div>
     }
