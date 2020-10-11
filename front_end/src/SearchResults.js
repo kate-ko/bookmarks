@@ -2,12 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark as solidBookmark } from '@fortawesome/free-solid-svg-icons'
 import { faBookmark } from '@fortawesome/free-regular-svg-icons'
-import { add_bookmark } from './API'
-import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
-import { inject } from 'mobx-react';
-
-@inject("store")
 
 @observer
 class SearchResults extends Component {
@@ -30,7 +25,7 @@ class SearchResults extends Component {
                             el.added ? <FontAwesomeIcon
                                 className="icon" title="remove"
                                 icon={solidBookmark}
-                                onClick={() => store.removeBookmark(el._id)} /> :
+                                onClick={() => store.removeBookmarkRepos(el._id)} /> :
                                 <FontAwesomeIcon className="icon" title="add" onClick={() => store.addBookmark(el)}
                                     icon={faBookmark}
                                 />

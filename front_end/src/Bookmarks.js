@@ -23,7 +23,7 @@ class Bookmarks extends Component {
                 store.bookmarks && store.bookmarks.length ? store.bookmarks.map(el =>
                     <div key={el._id} className="block">
                         <a target="_blank" rel="noopener noreferrer" href={el.html_url}>{el.name}</a>
-                        <FontAwesomeIcon onClick={() => store.remove_bookmark(el._id)} icon={faTrash} />
+                        <FontAwesomeIcon onClick={() => store.removeBookmark(el._id)} icon={faTrash} />
                         <div className="desc">{el.description}</div>
                         <div className="org">{el.org}</div>
                     </div>) : 'No bookmarks added'

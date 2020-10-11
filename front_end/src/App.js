@@ -11,7 +11,7 @@ import SearchResults from './SearchResults'
 import Navbar from './Navbar'
 import './style.css'
 import 'bootstrap/dist/css/bootstrap.css';
-//import store from './store.js'
+import store from './store.js'
 import { observer } from 'mobx-react';
 
 @observer
@@ -20,19 +20,19 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Navbar  />
+          <Navbar  store={store}/>
 
           <Switch>
             <Route path="/bookmarks">
-              <Bookmarks />
+              <Bookmarks store={store}/>
             </Route>
 
             <Route path="/search">
-              <SearchResults  />
+              <SearchResults store={store} />
             </Route>
 
             <Route exact path="/">
-              <Redirect to="/bookmarks"  />
+              <Redirect store={store} to="/bookmarks"  />
             </Route>
           </Switch>
         </div>

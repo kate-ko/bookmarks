@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { observer, inject  } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import {
     NavLink,
     Link
 } from "react-router-dom";
-
-@inject("store")
 
 @observer
 class Navbar extends Component {
@@ -27,7 +25,7 @@ class Navbar extends Component {
             <form className="form-inline">
                 <input
                     className="form-control mr-sm-2"
-                    // type="search"
+                    type="search"
                     placeholder="Type Github Organization" aria-label="Search"
                     value={store.org}
                     onChange={store.handleChange}

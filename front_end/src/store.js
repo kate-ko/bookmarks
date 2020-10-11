@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 import API from './API'
 
-export default class baseClass {
+class BaseClass {
     @observable org;
     @observable found_repos = [];
     @observable bookmarks = [];
@@ -65,7 +65,7 @@ export default class baseClass {
     }
 
     @action
-    removeBookmark = (_id) => {
+    removeBookmarkRepos = (_id) => {
         API.delete_bookmark(_id).then(() => {
             this.found_repos = this.found_repos.map(el => {
                 if (el._id == _id) {
@@ -74,11 +74,10 @@ export default class baseClass {
                 return el;
             })
         })
-
     }
 
     @action
-    remove_bookmark = (id) => {
+    removeBookmark = (id) => {
         this.loading_bookmarks = true
 
         return API.delete_bookmark(id).then(() => {
@@ -92,3 +91,5 @@ export default class baseClass {
     }
 
 }
+
+export default new BaseClass();
