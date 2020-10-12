@@ -12,6 +12,8 @@
     "@testing-library/user-event": "^7.2.1",
     "bootstrap": "^4.5.2",
     "jQuery": "^1.7.4",
+    "mobx": "^6.0.1",
+    "mobx-react": "^7.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
