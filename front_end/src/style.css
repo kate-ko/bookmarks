@@ -6,9 +6,16 @@
     padding-right: 20px;
 }
 
+.spin-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100% - 56px);
+}
+
 .main {
-    padding: 3% 10% 0 10%;
-    display: grid;
+  padding: 3% 10% 0 10%;
+  display: grid;
 }
 
 .desc {

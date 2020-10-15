@@ -18,7 +18,6 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
           <Navbar  store={store}/>
 
           <Switch>
@@ -34,7 +33,6 @@ class App extends Component {
               <Redirect store={store} to="/bookmarks"  />
             </Route>
           </Switch>
-        </div>
       </Router>
     );
   }

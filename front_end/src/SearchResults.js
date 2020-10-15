@@ -12,28 +12,24 @@ class SearchResults extends Component {
     render() {
         const store = this.props.store;
 
-        return <div className="main">
-            {store.loading_repos ? <div className="spinner"></div> :
+        return store.loading_repos ? <div className="spin-wrap"><div className="spinner" /></div> :
 
-                store.found_repos.length ? store.found_repos.map(el =>
-                    <div key={el.id}
-                        className="block"
-                    >
-                        <a target="_blank" rel="noopener noreferrer" href={el.html_url}>{el.name}</a>
-                        {
-                            el.added ? <FontAwesomeIcon
-                                className="icon" title="remove"
-                                icon={solidBookmark}
-                                onClick={() => store.removeBookmarkRepos(el._id)} /> :
-                                <FontAwesomeIcon className="icon" title="add" onClick={() => store.addBookmark(el)}
-                                    icon={faBookmark}
-                                />
-                        }
-                        <div className="desc">{el.description}</div>
-                        <div>{el._id}</div>
-                    </div>) : <div>No repos found</div>
+            <div className="main"> {store.found_repos.length ? store.found_repos.map(el =>
+                <div key={el.id} className="block">
+                    <a target="_blank" rel="noopener noreferrer" href={el.html_url}>{el.name}</a>
+                    {
+                        el.added ? <FontAwesomeIcon
+                            className="icon" title="remove"
+                            icon={solidBookmark}
+                            onClick={() => store.removeBookmarkRepos(el._id)} /> :
+                            <FontAwesomeIcon className="icon" title="add" onClick={() => store.addBookmark(el)}
+                                icon={faBookmark}
+                            />
+                    }
+                    <div className="desc">{el.description}</div>
+                </div>) : <div>No repos found</div>
             }
-        </div>
+            </div>
     }
 }
 
