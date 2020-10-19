@@ -4,7 +4,7 @@ const Bookmark = require('../models/bookmark.model');
 exports.index = function (req, res) {
     Bookmark.get(function (err, bookmark) {
         if (err)
-            res.json({
+            return res.json({
                 status: "error",
                 message: err
             });
@@ -30,8 +30,8 @@ exports.add = function (req, res) {
 
     //Save and check error
     bookmark.save(function (err) {
-        if (err)
-            res.json(err);
+        if (err) return res.json(err);
+        
         res.json({
             message: "New Bookmark Added!",
             data: bookmark
@@ -42,8 +42,8 @@ exports.add = function (req, res) {
 // View Bookmark
 exports.view = function (req, res) {
     Bookmark.findById(req.params.id, function (err, bookmark) {
-        if (err)
-            res.send(err);
+        if (err) return res.send(err);
+
         res.json({
             message: 'Bookmark Details',
             data: bookmark
@@ -54,7 +54,7 @@ exports.view = function (req, res) {
 // Update Bookmark
 exports.update = function (req, res) {
     Bookmark.findById(req.params.id, function (err, bookmark) {
-        if (err) res.send(err);
+        if (err) return res.send(err);
 
         const { name, org, description, html_url, id } = req.body
 
@@ -66,8 +66,8 @@ exports.update = function (req, res) {
 
         //save and check errors
         bookmark.save(function (err) {
-            if (err)
-                res.json(err)
+            if (err) return res.json(err)
+            
             res.json({
                 message: "Bookmark Updated Successfully",
                 data: bookmark
@@ -82,7 +82,7 @@ exports.delete = function (req, res) {
         _id: req.params.id
     }, function (err, contact) {
         if (err)
-            res.send(err)
+            return res.send(err)
         res.json({
             status: "success",
             message: 'Bookmark Deleted'
